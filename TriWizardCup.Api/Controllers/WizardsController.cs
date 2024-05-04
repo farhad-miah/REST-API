@@ -4,13 +4,21 @@ using TriWizardCup.Entities.DbSet;
 using TriWizardCup.Entities.Dtos.Requests;
 using TriWizardCup.Entities.Dtos.Responses;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using System.Runtime.CompilerServices;
+using TriWizardCup.Api.Queries;
+using TriWizardCup.Api.Commands;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TriWizardCup.Api.Controllers
 {
     public class WizardsController : BaseController
     {
-        public WizardsController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        private readonly IMediator _mediator;
+
+        public WizardsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper)
         {
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -27,18 +35,32 @@ namespace TriWizardCup.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllWizards()
+        {
+            //create a query
+            var query = new GetAllWizardsQuery();
+
+            //await result from the handler passed by MediatR
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+
+
         [HttpPost("")]
         public async Task<IActionResult> AddWizard([FromBody] CreateWizardRequest wizard)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var result = _mapper.Map<Wizard>(wizard);
+            //create command
+            var command = new CreateWizardInfoRequest(wizard);
 
-            await _unitOfWork.Wizards.Add(result);
-            await _unitOfWork.CompleteAsync();
+            //await result from handler from MediatR
+            var result = await _mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetWizard), new { wizardId = result.Id }, result);
+            return CreatedAtAction(nameof(GetWizard), new { wizardId = result.WizardId }, result);
         }
 
         [HttpPut("")]
@@ -53,14 +75,6 @@ namespace TriWizardCup.Api.Controllers
             await _unitOfWork.CompleteAsync();
 
             return NoContent();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllWizards()
-        {
-            var wizards = await _unitOfWork.Wizards.All();
-
-            return Ok(_mapper.Map<IEnumerable<GetWizardResponse>>(wizards));
         }
 
         [HttpDelete]
