@@ -7,6 +7,8 @@ namespace TriWizardCup.DataService.Repositories
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly AppDbContext _context;
+        private readonly ILogger _logger;
+        private bool _disposed = false;
 
         public IWizardRepository Wizards {  get;}
 
@@ -15,23 +17,48 @@ namespace TriWizardCup.DataService.Repositories
         public UnitOfWork(AppDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
-            var logger = loggerFactory.CreateLogger("logs");
+            _logger = loggerFactory.CreateLogger("logs");
 
-            Wizards = new WizardRepository(_context, logger);
-            Achievements = new AchievementsRepository(_context, logger);
+            Wizards = new WizardRepository(_context, _logger);
+            Achievements = new AchievementsRepository(_context, _logger);
         }
 
 
         //This method is called after each change to the DB in order to save the changes.
         public async Task<bool> CompleteAsync()
         {
-            var result = await _context.SaveChangesAsync();
-            return result > 0;
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var result = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while completing the unit of work.");
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+                _disposed = true;
+            }
         }
     }
 }

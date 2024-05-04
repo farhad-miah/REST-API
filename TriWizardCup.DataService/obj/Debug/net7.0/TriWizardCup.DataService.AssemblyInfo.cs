@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TriWizardCup.DataService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf71510078cc654dd05fb90364dc81f0269bd29b")]
 [assembly: System.Reflection.AssemblyProductAttribute("TriWizardCup.DataService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TriWizardCup.DataService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

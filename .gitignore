@@ -1,1 +1,29 @@
+# Ignore bin and obj directories
+bin/
+obj/
+
+# Ignore database files
+*.db-shm
+*.db-wal
+
+# Ignore temporary files and cache
+*.cache
+*.sourcelink.json
+*.FileListAbsolute.txt
+
+# Ignore IDE/editor specific files
 .vs/
+.vscode/
+*.sln
+*.csproj.user
+
+# Ignore compiled libraries
+*.dll
+*.pdb
+
+# Ignore temporary backup files
+*~
+
+# Ignore user-specific files
+.vscode/settings.json
+.idea/*
