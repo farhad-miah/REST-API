@@ -1,4 +1,4 @@
-A REST API I created for the Tri Wizard Cup
+A REST API created for the Tri Wizard Cup
 -----------------------------------------------------------------------------------
 
 It uses the repository pattern to separate the logic which retrieves the sata from the database from the rest of the application.
