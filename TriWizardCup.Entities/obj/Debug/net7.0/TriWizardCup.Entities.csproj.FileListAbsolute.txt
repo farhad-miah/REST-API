@@ -9,3 +9,4 @@ C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Entities\obj\Debug\net7.0
 C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Entities\obj\Debug\net7.0\refint\TriWizardCup.Entities.dll
 C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Entities\obj\Debug\net7.0\TriWizardCup.Entities.pdb
 C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Entities\obj\Debug\net7.0\ref\TriWizardCup.Entities.dll
+C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Entities\obj\Debug\net7.0\TriWizardCup.Entities.sourcelink.json
