@@ -20,7 +20,9 @@ namespace TriWizardCup.Api.MappingProfiles
                 opt => opt.MapFrom(src => DateTime.UtcNow))
                 .ForMember(
                 dest => dest.UpdatedDate,
-                opt => opt.MapFrom(src => DateTime.UtcNow));
+                opt => opt.MapFrom(src => DateTime.UtcNow)).ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.WizardId));
 
             CreateMap<UpdateWizardAchievementRequest, Achievement>()
                 .ForMember(
@@ -28,7 +30,10 @@ namespace TriWizardCup.Api.MappingProfiles
                 opt => opt.MapFrom(src => src.Wins))
                 .ForMember(
                 dest => dest.UpdatedDate,
-                opt => opt.MapFrom(src => DateTime.UtcNow));
+                opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.WizardId));
 
             CreateMap<CreateWizardRequest, Wizard>()
                 .ForMember(
@@ -44,7 +49,10 @@ namespace TriWizardCup.Api.MappingProfiles
             CreateMap<UpdateWizardRequest, Wizard>()
                 .ForMember(
                 dest => dest.UpdatedDate,
-                opt => opt.MapFrom(src => DateTime.UtcNow));
+                opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.WizardId));
         }
     }
 }

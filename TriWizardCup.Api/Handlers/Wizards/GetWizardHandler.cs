@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using TriWizardCup.Api.Queries;
+using TriWizardCup.Api.Queries.Wizards;
 using TriWizardCup.DataService.Repositories.Interfaces;
 using TriWizardCup.Entities.Dtos.Responses;
 
-namespace TriWizardCup.Api.Handlers
+namespace TriWizardCup.Api.Handlers.Wizards
 {
     public class GetWizardHandler : BaseHandler, IRequestHandler<GetWizardQuery, GetWizardResponse?>
     {

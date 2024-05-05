@@ -1,58 +1,53 @@
 ﻿using AutoMapper;
-using TriWizardCup.DataService.Repositories.Interfaces;
-using TriWizardCup.Entities.DbSet;
-using TriWizardCup.Entities.Dtos.Requests;
-using TriWizardCup.Entities.Dtos.Responses;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TriWizardCup.Api.Commands.Achievements;
+using TriWizardCup.Api.Queries.Achievements;
+using TriWizardCup.DataService.Repositories.Interfaces;
+using TriWizardCup.Entities.Dtos.Requests;
 
 namespace TriWizardCup.Api.Controllers
 {
     public class AchievementsController : BaseController
     {
-        public AchievementsController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public AchievementsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
         {
         }
 
-        [HttpGet]
-        [Route("{wizardId:guid}")]
+        [HttpGet("{wizardId:guid}", Name = "GetWizardAchievements")]
         public async Task<IActionResult> GetWizardAchievements(Guid wizardId)
         {
-            var wizardAchievements = await _unitOfWork.Achievements.GetWizardAchievementAsync(wizardId);
+            var query = new GetWizardsAchievementsQuery(wizardId);
 
-            if (wizardAchievements is null)
-                return NotFound("Achievements not found");
+            var result = await _mediator.Send(query);
 
-            var result = _mapper.Map<WizardAchievementResponse>(wizardAchievements);
-
-            return Ok(result);
+            return result is null ? NotFound() : Ok(result);
         }
 
-        [HttpPost("")]
+        [HttpPost("", Name = "AddAchievement")]
         public async Task<IActionResult> AddAchievement([FromBody] CreateWizardAchievementRequest achievement)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var result = _mapper.Map<Achievement>(achievement);
+            var command = new AddWizardAchievementInfoRequest(achievement);
 
-            await _unitOfWork.Achievements.Add(result);
-            await _unitOfWork.CompleteAsync();
+            var result = await _mediator.Send(command);
 
             return CreatedAtAction(nameof(GetWizardAchievements), new { wizardId = result.WizardId }, result);
         }
 
-        [HttpPut("")]
+        [HttpPut("", Name = "UpdateAchievement")]
         public async Task<IActionResult> UpdateAchievements([FromBody] UpdateWizardAchievementRequest achievement)
         { 
             if(!ModelState.IsValid)
                 return BadRequest();
 
-            var result = _mapper.Map<Achievement>(achievement);
+            var command = new UpdateWizardAchievementInfoRequest(achievement);
 
-            await _unitOfWork.Achievements.Update(result);
-            await _unitOfWork.CompleteAsync();
+            var result = await _mediator.Send(command);
 
-            return NoContent();
+            return result ? NoContent() : BadRequest();
         }
     }
 }

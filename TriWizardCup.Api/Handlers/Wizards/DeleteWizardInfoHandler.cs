@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using TriWizardCup.Api.Commands;
+using TriWizardCup.Api.Commands.Wizards;
 using TriWizardCup.DataService.Repositories.Interfaces;
 using TriWizardCup.Entities.DbSet;
 
-namespace TriWizardCup.Api.Handlers
+namespace TriWizardCup.Api.Handlers.Wizards
 {
     public class DeleteWizardInfoHandler : BaseHandler, IRequestHandler<DeleteWizardInfoRequest, bool>
     {

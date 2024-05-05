@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TriWizardCup.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+196d4a93e65bdd4cd7e79b089f8a6e5fee49dbee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbc06902e19fd8e52b7b41f72a8d23ffa1711224")]
 [assembly: System.Reflection.AssemblyProductAttribute("TriWizardCup.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TriWizardCup.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

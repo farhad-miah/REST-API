@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TriWizardCup.Entities.Dtos.Responses;
 
-namespace TriWizardCup.Api.Queries
+namespace TriWizardCup.Api.Queries.Wizards
 {
     public class GetWizardQuery : IRequest<GetWizardResponse?>
     {

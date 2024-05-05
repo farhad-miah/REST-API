@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TriWizardCup.Api.Commands;
-using TriWizardCup.Api.Queries;
+using TriWizardCup.Api.Commands.Wizards;
+using TriWizardCup.Api.Queries.Wizards;
 using TriWizardCup.DataService.Repositories.Interfaces;
 using TriWizardCup.Entities.Dtos.Requests;
 
@@ -14,21 +14,17 @@ namespace TriWizardCup.Api.Controllers
         {
         }
 
-        [HttpGet]
-        [Route("{wizardId:Guid}")]
+        [HttpGet("{wizardId:guid}", Name = "GetWizardById")]
         public async Task<IActionResult> GetWizard(Guid wizardId)
         {
             var query = new GetWizardQuery(wizardId);
 
             var result = await _mediator.Send(query);
 
-            if (result is null)
-                return NotFound();
-
             return result is null ? NotFound() : Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("", Name = "GetAllWizards")]
         public async Task<IActionResult> GetAllWizards()
         {
             //create a query
@@ -41,7 +37,7 @@ namespace TriWizardCup.Api.Controllers
         }
 
 
-        [HttpPost("")]
+        [HttpPost("", Name = "AddWizard")]
         public async Task<IActionResult> AddWizard([FromBody] CreateWizardRequest wizard)
         {
             if (!ModelState.IsValid)
@@ -56,7 +52,7 @@ namespace TriWizardCup.Api.Controllers
             return CreatedAtAction(nameof(GetWizard), new { wizardId = result.WizardId }, result);
         }
 
-        [HttpPut("")]
+        [HttpPut("", Name = "UpdateWizard")]
         public async Task<IActionResult> UpdateWizard([FromBody] UpdateWizardRequest wizard)
         {
             if (!ModelState.IsValid)
@@ -69,8 +65,7 @@ namespace TriWizardCup.Api.Controllers
             return result ? NoContent() : BadRequest();
         }
 
-        [HttpDelete]
-        [Route("{wizardId:guid}")]
+        [HttpDelete("{wizardId:guid}", Name = "DeleteWizardById")]
         public async Task<IActionResult> DeleteWizard(Guid wizardId)
         { 
             var command = new DeleteWizardInfoRequest(wizardId);
