@@ -7,18 +7,11 @@ using TriWizardCup.Entities.Dtos.Responses;
 
 namespace TriWizardCup.Api.Handlers
 {
-    public class AddWizardInfoHandler : IRequestHandler<CreateWizardInfoRequest, GetWizardResponse>
+    public class AddWizardInfoHandler : BaseHandler, IRequestHandler<CreateWizardInfoRequest, GetWizardResponse>
     {
-
-        protected readonly IUnitOfWork _unitOfWork;
-        protected readonly IMapper _mapper;
-
-        public AddWizardInfoHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public AddWizardInfoHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
-
 
         public async Task<GetWizardResponse> Handle(CreateWizardInfoRequest request, CancellationToken cancellationToken)
         {

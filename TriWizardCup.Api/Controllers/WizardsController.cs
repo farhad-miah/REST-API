@@ -1,38 +1,31 @@
 ﻿using AutoMapper;
-using TriWizardCup.DataService.Repositories.Interfaces;
-using TriWizardCup.Entities.DbSet;
-using TriWizardCup.Entities.Dtos.Requests;
-using TriWizardCup.Entities.Dtos.Responses;
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using System.Runtime.CompilerServices;
-using TriWizardCup.Api.Queries;
+using Microsoft.AspNetCore.Mvc;
 using TriWizardCup.Api.Commands;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using TriWizardCup.Api.Queries;
+using TriWizardCup.DataService.Repositories.Interfaces;
+using TriWizardCup.Entities.Dtos.Requests;
 
 namespace TriWizardCup.Api.Controllers
 {
     public class WizardsController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public WizardsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper)
+        public WizardsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
         {
-            _mediator = mediator;
         }
 
         [HttpGet]
         [Route("{wizardId:Guid}")]
         public async Task<IActionResult> GetWizard(Guid wizardId)
         {
-            var wizard = await _unitOfWork.Wizards.GetById(wizardId);
+            var query = new GetWizardQuery(wizardId);
 
-            if (wizard is null)
+            var result = await _mediator.Send(query);
+
+            if (result is null)
                 return NotFound();
 
-            var result = _mapper.Map<GetWizardResponse>(wizard);
-
-            return Ok(result);
+            return result is null ? NotFound() : Ok(result);
         }
 
         [HttpGet]
@@ -69,27 +62,22 @@ namespace TriWizardCup.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var result = _mapper.Map<Wizard>(wizard);
+            var command = new UpdateWizardInfoRequest(wizard);
 
-            await _unitOfWork.Wizards.Update(result);
-            await _unitOfWork.CompleteAsync();
+            var result = await _mediator.Send(command);
 
-            return NoContent();
+            return result ? NoContent() : BadRequest();
         }
 
         [HttpDelete]
         [Route("{wizardId:guid}")]
         public async Task<IActionResult> DeleteWizard(Guid wizardId)
         { 
-            var wizard = await _unitOfWork.Wizards.GetById(wizardId);
+            var command = new DeleteWizardInfoRequest(wizardId);
 
-            if (wizard is null)
-                return NotFound();
+            var result = await _mediator.Send(command);
 
-            await _unitOfWork.Wizards.Delete(wizardId);
-            await _unitOfWork.CompleteAsync();
-
-            return NoContent();
+            return result ? NoContent() : BadRequest();
         }
     }
 }

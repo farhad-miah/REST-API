@@ -6,16 +6,12 @@ using TriWizardCup.Entities.Dtos.Responses;
 
 namespace TriWizardCup.Api.Handlers
 {
-    public class GetAllWizardsHandler : IRequestHandler<GetAllWizardsQuery, IEnumerable<GetWizardResponse>>
+    public class GetAllWizardsHandler : BaseHandler, IRequestHandler<GetAllWizardsQuery, IEnumerable<GetWizardResponse>>
     {
-        protected readonly IUnitOfWork _unitOfWork;
-        protected readonly IMapper _mapper;
-
-        public GetAllWizardsHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetAllWizardsHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
+
         public async Task<IEnumerable<GetWizardResponse>> Handle(GetAllWizardsQuery request, CancellationToken cancellationToken)
         {
             var wizards = await _unitOfWork.Wizards.All();
