@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TriWizardCup.DataService.Data
 {
-    //Using base class of IdentityDbContext instead of DbContext to generate identity tables
+    // Using base class of IdentityDbContext instead of DbContext to generate identity tables
     public class AppDbContext : IdentityDbContext
     {
-        //defining entities
+        // Defining entities
         public virtual DbSet<Wizard> Wizards { get; set; }
         public virtual DbSet<Achievement> Achievements { get; set; }
 
@@ -18,7 +18,7 @@ namespace TriWizardCup.DataService.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //specified the relationship between the entities
+            // Specified the relationship between the entities
             modelBuilder.Entity<Achievement>(entity =>
             {
                 entity.HasOne(d => d.Wizard)

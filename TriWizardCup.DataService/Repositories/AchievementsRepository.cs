@@ -16,7 +16,9 @@ namespace TriWizardCup.DataService.Repositories
         {
             try
             {
-                return await _dbSet.FirstOrDefaultAsync(x => x.WizardId == wizardId);
+                //include the wizard object returned with the query
+                return await _dbSet.Include(x => x.Wizard)
+                    .FirstOrDefaultAsync(x => x.WizardId == wizardId);
             }
             catch (Exception e)
             {
@@ -46,7 +48,7 @@ namespace TriWizardCup.DataService.Repositories
         {
             try
             {
-                // obtain entity
+                // Obtain entity
                 var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (result is null)
@@ -69,7 +71,7 @@ namespace TriWizardCup.DataService.Repositories
         {
             try
             {
-                // obtain entity
+                // Obtain entity
                 var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == achievement.Id);
 
                 if (result is null)
@@ -77,9 +79,9 @@ namespace TriWizardCup.DataService.Repositories
 
                 result.UpdatedDate = DateTime.UtcNow;
                 result.TotalEnemiesDefeated = achievement.TotalEnemiesDefeated;
-                result.PodiumPosition = achievement.PodiumPosition;
+                result.TopThreeFinishes = achievement.TopThreeFinishes;
                 result.DuelsWon = achievement.DuelsWon;
-                result.WorldChampionship = achievement.WorldChampionship;
+                result.TriWizardCupWins = achievement.TriWizardCupWins;
 
                 return true;
             }

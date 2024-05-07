@@ -1,10 +1,11 @@
+using Asp.Versioning;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using TriWizardCup.DataService.Data;
 using TriWizardCup.DataService.Repositories;
 using TriWizardCup.DataService.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-//added in configuration for swagger so it allows users to autheticate themselves by registering, logging in and using the Authorize option at the top to pass in the bearer token
+// Added in configuration for swagger so it allows users to autheticate themselves by registering, logging in and using the Authorize option at the top to pass in the bearer token
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -31,11 +32,37 @@ builder.Services.AddSwaggerGen(opt =>
     });
 
     opt.OperationFilter<SecurityRequirementsOperationFilter>();
+
+    // Adding functionality of the versions of API to swagger
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "API V1", Version = "v1" });
+    opt.SwaggerDoc("v2", new OpenApiInfo { Title = "API V2", Version = "v2" });
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddApiVersioning(opt => 
+{
+    // Enable assuming default version when the client request doesn't specify a version.
+    opt.AssumeDefaultVersionWhenUnspecified = true;
+    // Specify the default version here. 
+    opt.DefaultApiVersion = new ApiVersion(1, 0);
+    // Enable reporting of API versions in the response headers.
+    opt.ReportApiVersions = true;
+    opt.ApiVersionReader = ApiVersionReader.Combine(
+        // This reader extracts the API version from the query string of the request. It looks for a query parameter named "api-version" to determine the version.
+        new QueryStringApiVersionReader("api-version"),
+        // This reader extracts the API version from a custom header of the request. It looks for a header named "api-version" to determine the version.
+        new HeaderApiVersionReader("api-version"),
+        // This reader extracts the API version from the URL segments of the request.It parses the URL path to identify the version information.
+        new UrlSegmentApiVersionReader()
+    );
+}).AddApiExplorer(opt =>
+{
+    opt.GroupNameFormat = "'v'V";
+    opt.SubstituteApiVersionInUrl = true;
+});
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
@@ -62,7 +89,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        // Making a UI to interact with the endpoints in each version
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+        options.SwaggerEndpoint("/swagger/v2/swagger.json", "API V2");
+    });
     app.MapIdentityApi<IdentityUser>();
 }
 

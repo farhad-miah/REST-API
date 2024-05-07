@@ -24,7 +24,7 @@ namespace TriWizardCup.DataService.Repositories
         }
 
 
-        //This method is called after each change to the DB in order to save the changes.
+        // This method is called after each change to the DB in order to save the changes.
         public async Task<bool> CompleteAsync()
         {
             using var transaction = await _context.Database.BeginTransactionAsync();

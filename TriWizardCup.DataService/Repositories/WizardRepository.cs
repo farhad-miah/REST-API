@@ -33,7 +33,7 @@ namespace TriWizardCup.DataService.Repositories
         {
             try
             {
-                // obtain entity
+                // Obtain entity
                 var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (result is null)
@@ -56,7 +56,7 @@ namespace TriWizardCup.DataService.Repositories
         {
             try 
             {
-                // obtain entity
+                // Obtain entity
                 var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == wizard.Id);
 
                 if (result is null)
