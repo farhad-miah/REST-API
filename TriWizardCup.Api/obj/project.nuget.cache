@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "qZsXmm9rcGAxmi9N75W6+ELmD3BVagrHcB2Plv2M6vSPWbUZ6V1hBS4U9zqtyEnO57kEswDsESIc5dFZdnOtrg==",
+  "dgSpecHash": "AtrmQGUHr4qu0CiczhP2hrIJk96KeYKreen8DXTGmLzYRqZWNAU2rpklT9HUayJe2sOvTZXXtTBaKoWGVeMTKQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Farhad\\source\\repos\\TriWizardCup\\TriWizardCup.Api\\TriWizardCup.Api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Farhad\\.nuget\\packages\\asp.versioning.abstractions\\8.1.0\\asp.versioning.abstractions.8.1.0.nupkg.sha512",
+    "C:\\Users\\Farhad\\.nuget\\packages\\asp.versioning.http\\8.1.0\\asp.versioning.http.8.1.0.nupkg.sha512",
+    "C:\\Users\\Farhad\\.nuget\\packages\\asp.versioning.mvc\\8.1.0\\asp.versioning.mvc.8.1.0.nupkg.sha512",
+    "C:\\Users\\Farhad\\.nuget\\packages\\asp.versioning.mvc.apiexplorer\\8.1.0\\asp.versioning.mvc.apiexplorer.8.1.0.nupkg.sha512",
     "C:\\Users\\Farhad\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Farhad\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Farhad\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",

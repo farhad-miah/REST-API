@@ -143,3 +143,7 @@ C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Micr
 C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Scrutor.dll
 C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Asp.Versioning.Abstractions.dll
+C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Asp.Versioning.Http.dll
+C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
+C:\Users\Farhad\source\repos\TriWizardCup\TriWizardCup.Api\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll

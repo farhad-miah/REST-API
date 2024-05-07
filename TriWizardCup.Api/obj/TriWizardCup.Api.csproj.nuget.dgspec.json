@@ -84,6 +84,14 @@
             "Swashbuckle.AspNetCore.Filters": {
               "target": "Package",
               "version": "[8.0.2, )"
+            },
+            "asp.versioning.mvc": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "asp.versioning.mvc.apiexplorer": {
+              "target": "Package",
+              "version": "[8.1.0, )"
             }
           },
           "imports": [
