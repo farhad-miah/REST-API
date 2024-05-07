@@ -1,6 +1,6 @@
 <h1>A REST API created for the Tri Wizard Cup</h1>
 
-Please note: The application focuses less on the operational side of things and focuses more on design principles. Here's an overview of the design decisions and patterns implemented:
+Please note: The application focuses less on the operational side of things and focuses more on design principles and features. Here's an overview of the design patterns and features implemented:
 -----------------------------------------------------------------------------------
 
 <h3>Repository Pattern</h3> <i>Implemented the repository pattern to separate data retrieval logic from the rest of the application. This promotes modularity and improves maintainability by encapsulating database interactions.</i>
