@@ -1,9 +1,11 @@
 ﻿using TriWizardCup.Entities.DbSet;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TriWizardCup.DataService.Data
 {
-    public class AppDbContext : DbContext
+    //Using base class of IdentityDbContext instead of DbContext to generate identity tables
+    public class AppDbContext : IdentityDbContext
     {
         //defining entities
         public virtual DbSet<Wizard> Wizards { get; set; }

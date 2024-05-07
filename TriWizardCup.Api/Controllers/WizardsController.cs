@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TriWizardCup.Api.Commands.Wizards;
 using TriWizardCup.Api.Queries.Wizards;
@@ -65,7 +66,8 @@ namespace TriWizardCup.Api.Controllers
             return result ? NoContent() : BadRequest();
         }
 
-        [HttpDelete("{wizardId:guid}", Name = "DeleteWizardById")]
+        // Requires authentication. Users must provide a valid bearer token in the request headers to access this endpoint.
+        [HttpDelete("{wizardId:guid}", Name = "DeleteWizardById"), Authorize]
         public async Task<IActionResult> DeleteWizard(Guid wizardId)
         { 
             var command = new DeleteWizardInfoRequest(wizardId);
