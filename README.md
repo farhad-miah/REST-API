@@ -18,4 +18,4 @@ Please note: The application focuses less on the operational side of things and 
 <h3>Identity</h3> <i>Integrated Identity to enforce authorization for certain endpoints, such as the DeleteWizard endpoint in the Wizard API controller. This enhances security by requiring authentication for sensitive operations.</i>
 
 
-<h3>API Versioning</h3> <i>Added in versioning to the API as well swagger ui functionality to test these API changes. Versioning allows the safe introduction of new changes while also supporting legacy client.</i>
+<h3>API Versioning</h3> <i>Added in versioning to the API as well swagger ui functionality to test these API changes. Versioning allows the safe introduction of new changes while also supporting legacy client. WORK IN PROGRESS</i>
